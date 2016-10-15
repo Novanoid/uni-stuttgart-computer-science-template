@@ -1,4 +1,3 @@
-
 # Kapitel zwei
 
 Hier wird der Hauptteil stehen.

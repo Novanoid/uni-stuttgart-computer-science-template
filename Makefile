@@ -70,7 +70,7 @@ create-build-dir:
 	mkdir -p $(BUILD_DIR)
 
 concat-markdown: create-build-dir
-	cat $(sort $(MARKDOWN_FILES)) > $(COMBINED_MD)
+	sed -s '$$G' $(sort $(MARKDOWN_FILES)) > $(COMBINED_MD)
 
 pandoc-watch:
 	while inotifywait -e close_write $(MARKDOWN_FILES); do make pandoc; done

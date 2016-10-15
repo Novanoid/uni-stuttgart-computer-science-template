@@ -1,4 +1,3 @@
-
 # Markdown Tipps
 
 ## Allgemein
