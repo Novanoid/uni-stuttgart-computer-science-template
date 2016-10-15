@@ -15,7 +15,7 @@ editor = gedit
 # Main file name
 MASTER_TEX = ausarbeitung.tex
 LITERATURE = bibliography.bib
-MARKDOWN = ausarbeitung.md
+MARKDOWN = markdown/content.md
 PANDOC_TEMPLATE = template.tex
 
 
