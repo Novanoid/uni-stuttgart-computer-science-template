@@ -17,6 +17,7 @@ editor = gedit
 MASTER_TEX = ausarbeitung.tex
 LITERATURE = bibliography.bib
 MARKDOWN_CONTENT = markdown/content.md
+MARKDOWN_ANY = $(wildcard markdown/*.md)
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 PANDOC_TEMPLATE = markdown/template/template.tex
 
@@ -59,6 +60,9 @@ ps: $(PDF)
 	pdftops $(PDF)
 
 pdf: $(PDF)
+
+pandoc-watch:
+	while inotifywait -e close_write $(MARKDOWN_ANY); do make pandoc; done
 
 pandoc:
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
