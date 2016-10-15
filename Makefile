@@ -1,6 +1,7 @@
 # Executables
 latexmk = latexmk
 pandoc = pandoc
+perl = perl
 
 ## Required for thumbpdf as latexmk does not support thumbpdf by itself
 pdflatex = pdflatex
@@ -15,8 +16,9 @@ editor = gedit
 # Main file name
 MASTER_TEX = ausarbeitung.tex
 LITERATURE = bibliography.bib
-MARKDOWN = markdown/content.md
-PANDOC_TEMPLATE = template.tex
+MARKDOWN_CONTENT = markdown/content.md
+LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
+PANDOC_TEMPLATE = markdown/template/template.tex
 
 
 # Derived file names
@@ -27,8 +29,9 @@ GFX_FILES = $(wildcard graphics/*)
 PDF = $(SRC).pdf
 AUX = $(SRC).aux
 
-# Intermediate tex file that will be created by pandoc
-MARKDOWN_TEX = $(MARKDOWN).tex
+# Intermediate tex files
+COMBINED_TEX = $(PANDOC_TEMPLATE).combined.tex
+MARKDOWN_TEX = $(MARKDOWN_CONTENT).tex
 
 date=$(shell date +%Y%m%d%H%M)
 
@@ -58,8 +61,10 @@ ps: $(PDF)
 pdf: $(PDF)
 
 pandoc:
-	$(pandoc) $(MARKDOWN) -o $(MARKDOWN_TEX) --template=$(PANDOC_TEMPLATE) --bibliography=$(LITERATURE)
+	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
+	$(pandoc) $(MARKDOWN_CONTENT) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE)
 	$(MAKE) MASTER_TEX=$(MARKDOWN_TEX)
+	rm $(COMBINED_TEX)
 	rm $(MARKDOWN_TEX)
 
 view: pdf
