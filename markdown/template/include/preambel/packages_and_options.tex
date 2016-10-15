@@ -442,7 +442,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %biblatex statt bibtex
 \usepackage[
   backend       = biber, 	%biber does not work with 64x versions alternative: bibtex8
-														%minalphanames only works with biber backend														
+														%minalphanames only works with biber backend
   sortcites     = true,
   bibstyle      = alphabetic,
   citestyle     = alphabetic,
@@ -611,17 +611,17 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 \fi
 
 \usepackage[
-    title={Förderungswürdigkeit der F\"{o}rderung von Öl},
-    author={Lars K.},
-    type=bachelor,
-    institute=iaas,
-    number=12345,
-    course=se,
-    examiner={Prof.\ Dr.\ Uwe Fessor},
-    supervisor={Dipl.-Inf.\ Roman Tiker,\\Dipl.-Inf.\ Laura Stern,\\Otto Normalverbraucher,\ M.Sc.},
-    startdate={5.\ Juli 2013}, % English: July 5, 2013;    ISO: 2013-07-05
-    enddate={5.\ Januar 2014}, % English: January 5, 2014; ISO: 2014-01-05
-    crk={I.7.2}
+      title={$meta.title$},
+      author={$meta.author$},
+      type=$document.type$,
+      institute=$meta.institute$,
+      number=$meta.number$,
+      course=$meta.course$,
+      examiner={$meta.examiner$},
+      supervisor={$meta.supervisor$},
+      startdate={$meta.start-date$},
+      enddate={$meta.end-date$},
+      crk={$meta.crk$}
     ]{uni-stuttgart-cs-cover}
 %
 %%%
