@@ -14,7 +14,7 @@ editor = gedit
 
 
 # Main file name
-MASTER_TEX = ausarbeitung.tex
+PDF_OUT = paper.pdf
 LITERATURE = bibliography.bib
 MARKDOWN_FILES = $(wildcard markdown/*.md)
 METADATA_FILE = markdown/meta.yaml
@@ -25,66 +25,96 @@ PANDOC_TEMPLATE = markdown/template/template.tex
 BUILD_DIR = build
 
 
+# Intermediate tex files
+COMBINED_MD = $(BUILD_DIR)/markdown.md
+COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
+MARKDOWN_TEX = $(BUILD_DIR)/markdown.tex
+
 # Derived file names
-SRC = $(shell basename $(MASTER_TEX) .tex)
+SRC = $(shell basename $(MARKDOWN_TEX) .tex)
 TEX_FILES = $(wildcard preambel/*.tex content/*.tex)
 GFX_FILES = $(wildcard graphics/*)
 
 PDF = $(SRC).pdf
 AUX = $(SRC).aux
 
-# Intermediate tex files
-COMBINED_MD = $(BUILD_DIR)/markdown.md
-COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
-MARKDOWN_TEX = $(BUILD_DIR)/markdown.tex
-
 date=$(shell date +%Y%m%d%H%M)
 
-# was wird gemacht, falls nur make aufgerufen wird
+# Builds the document and then watches all markdown files, triggering a
+# recompilation when one of the files was modified.
+watch: watch-all
+
+# Builds the document and then watches all markdown files, calling `make` with
+# e given target when a file changed.
+watch-%: pdf
+	while inotifywait -e close_write $(MARKDOWN_FILES); do make $@; done
+
+# Builds the document and then watches all markdown files, triggering a
+# recompilation when one of the files was modified. Mutes the output of the
+# `make` command.
+watch-silent: watch-all-silent
+
+	# Builds the document and then watches all markdown files, calling `make` with
+	# e given target when a file changed. Mutes the output of the `make` command.
+watch-%-silent: pdf
+	echo "$0"
+	# while inotifywait -e close_write $(MARKDOWN_FILES); do make $@ 1>/dev/null; done
+
+# Default action.
 #hier sollte noch der aspell check rein für jedes file einzeln über for schleife
 all: $(PDF)
 .PHONY: $(PDF)
 
-$(PDF): $(MASTER_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES) create-build-dir
-	$(latexmk) -jobname=$(BUILD_DIR)/build $(MASTER_TEX)
-	cp $(BUILD_DIR)/build.pdf $(PDF)
+# Builds the document and outputs it to $(PDF_OUT).
+$(PDF): pandoc $(MARKDOWN_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES) create-build-dir
+	$(latexmk) -jobname=$(BUILD_DIR)/build $(MARKDOWN_TEX)
+	cp $(BUILD_DIR)/build.pdf $(PDF_OUT)
 
+# Cleans all files created during compilation, excluding the final PDF.
 clean:
-	rm -r $(BUILD_DIR)
+	rm -r $(BUILD_DIR) 2> /dev/null
+
+# Cleans all files created during compilation, including the final PDF.
+clean-all: clean
+	rem $(PDF_OUT) 2> /dev/null
 
 # Endversion - mit eingebauter Seitenvorschau
 # mehrere Durchlaeufe, da bei longtable einige runs mehr vonnoeten sind...
 final: $(PDF)
 	thumbpdf $(PDF)
-	$(pdflatex) -output-directory=$(BUILD_DIR) $(MASTER_TEX)
+	$(pdflatex) -output-directory=$(BUILD_DIR) $(MARKDOWN_TEX)
 
+# Removes all temporary files from the root directory.
 mrproper: clean
 	rm -f *~
 
 ps: $(PDF)
 	pdftops $(PDF)
 
+# Builds the document. Same as `make`.
 pdf: $(PDF)
 
+# Creates the build-directory.
 create-build-dir:
 	mkdir -p $(BUILD_DIR)
 
+# Concatinates all markdown files to one long file that is later fed to pandoc.
 concat-markdown: create-build-dir
 	sed -s '$$G' $(sort $(MARKDOWN_FILES)) > $(COMBINED_MD)
 
-pandoc-watch:
-	while inotifywait -e close_write $(MARKDOWN_FILES); do make pandoc; done
-
+# Assembles the LaTeX Pandoc template from all its pieces.
 pandoc-template: create-build-dir
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
 
+# Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template concat-markdown
 	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
-	$(MAKE) MASTER_TEX=$(MARKDOWN_TEX)
 
+# Builds the document and opens it with $(viewer).
 view: pdf
 	$(viewer) $(PDF)&
 
+# Opens the document in $(viewer)
 edit:
 	$(viewer) $(PDF)&
 	$(editor) *.tex&
