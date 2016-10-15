@@ -62,7 +62,7 @@ pdf: $(PDF)
 
 pandoc:
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
-	$(pandoc) $(MARKDOWN_CONTENT) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE)
+	$(pandoc) $(MARKDOWN_CONTENT) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
 	$(MAKE) MASTER_TEX=$(MARKDOWN_TEX)
 	rm $(COMBINED_TEX)
 	rm $(MARKDOWN_TEX)
