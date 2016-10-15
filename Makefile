@@ -46,6 +46,8 @@ $(PDF): $(MASTER_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES)
 
 clean:
 	$(latexmk) -C
+	rm $(COMBINED_TEX)
+	rm $(MARKDOWN_TEX)
 
 # Endversion - mit eingebauter Seitenvorschau
 # mehrere Durchlaeufe, da bei longtable einige runs mehr vonnoeten sind...
@@ -68,8 +70,6 @@ pandoc:
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
 	$(pandoc) $(MARKDOWN_CONTENT) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
 	$(MAKE) MASTER_TEX=$(MARKDOWN_TEX)
-	rm $(COMBINED_TEX)
-	rm $(MARKDOWN_TEX)
 
 view: pdf
 	$(viewer) $(PDF)&
