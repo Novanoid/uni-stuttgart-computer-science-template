@@ -3,7 +3,7 @@ document:
 	language: en
 	type: bachelor
 meta:
-	title: The Most Important Paper in Existance
+	title: The Most Important Paper in Existence
 	author: John Doe
 	institute: iaas
 	number: 12345
