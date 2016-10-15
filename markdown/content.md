@@ -10,8 +10,8 @@ meta:
 	course: se
 	examiner: Prof. Dr. Mustermann
 	supervisor: Dipl.-Inf. Daniel Düsentrieb
-	start-date: 01.\ January\ 2016
-	end-date: 01.\ May\ 2016
+	start-date: 01\. January 2016
+	end-date: 01\. May 2016
 	crk: 1.7.2
 ---
 
