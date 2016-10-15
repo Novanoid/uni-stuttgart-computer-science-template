@@ -16,8 +16,8 @@ editor = gedit
 # Main file name
 MASTER_TEX = ausarbeitung.tex
 LITERATURE = bibliography.bib
-MARKDOWN_CONTENT = markdown/content.md
-MARKDOWN_ANY = $(wildcard markdown/*.md)
+MARKDOWN_FILES = $(wildcard markdown/*.md)
+METADATA_FILE = markdown/meta.yaml
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 PANDOC_TEMPLATE = markdown/template/template.tex
 
@@ -34,8 +34,9 @@ PDF = $(SRC).pdf
 AUX = $(SRC).aux
 
 # Intermediate tex files
+COMBINED_MD = $(BUILD_DIR)/markdown.md
 COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
-MARKDOWN_TEX = $(BUILD_DIR)/markdown-content.tex
+MARKDOWN_TEX = $(BUILD_DIR)/markdown.tex
 
 date=$(shell date +%Y%m%d%H%M)
 
@@ -68,14 +69,17 @@ pdf: $(PDF)
 create-build-dir:
 	mkdir -p $(BUILD_DIR)
 
+concat-markdown: create-build-dir
+	cat $(sort $(MARKDOWN_FILES)) > $(COMBINED_MD)
+
 pandoc-watch:
-	while inotifywait -e close_write $(MARKDOWN_ANY); do make pandoc; done
+	while inotifywait -e close_write $(MARKDOWN_FILES); do make pandoc; done
 
 pandoc-template: create-build-dir
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
 
-pandoc: pandoc-template create-build-dir
-	$(pandoc) $(MARKDOWN_CONTENT) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
+pandoc: create-build-dir pandoc-template concat-markdown
+	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
 	$(MAKE) MASTER_TEX=$(MARKDOWN_TEX)
 
 view: pdf
