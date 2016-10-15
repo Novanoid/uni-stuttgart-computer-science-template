@@ -21,6 +21,9 @@ MARKDOWN_ANY = $(wildcard markdown/*.md)
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 PANDOC_TEMPLATE = markdown/template/template.tex
 
+# Output directory
+BUILD_DIR = build
+
 
 # Derived file names
 SRC = $(shell basename $(MASTER_TEX) .tex)
@@ -42,10 +45,12 @@ all: $(PDF)
 .PHONY: $(PDF)
 
 $(PDF): $(MASTER_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES)
-	$(latexmk) $(MASTER_TEX)
+	mkdir -p $(BUILD_DIR)
+	$(latexmk) -jobname=$(BUILD_DIR)/build $(MASTER_TEX)
+	cp $(BUILD_DIR)/build.pdf $(PDF)
 
 clean:
-	$(latexmk) -C
+	rm -r $(BUILD_DIR)
 	rm $(COMBINED_TEX)
 	rm $(MARKDOWN_TEX)
 
@@ -53,7 +58,7 @@ clean:
 # mehrere Durchlaeufe, da bei longtable einige runs mehr vonnoeten sind...
 final: $(PDF)
 	thumbpdf $(PDF)
-	$(pdflatex) $(MASTER_TEX)
+	$(pdflatex) -output-directory=$(BUILD_DIR) $(MASTER_TEX)
 
 mrproper: clean
 	rm -f *~
