@@ -34,8 +34,8 @@ PDF = $(SRC).pdf
 AUX = $(SRC).aux
 
 # Intermediate tex files
-COMBINED_TEX = $(PANDOC_TEMPLATE).combined.tex
-MARKDOWN_TEX = $(MARKDOWN_CONTENT).tex
+COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
+MARKDOWN_TEX = $(BUILD_DIR)/markdown-content.tex
 
 date=$(shell date +%Y%m%d%H%M)
 
@@ -44,15 +44,12 @@ date=$(shell date +%Y%m%d%H%M)
 all: $(PDF)
 .PHONY: $(PDF)
 
-$(PDF): $(MASTER_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES)
-	mkdir -p $(BUILD_DIR)
+$(PDF): $(MASTER_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES) create-build-dir
 	$(latexmk) -jobname=$(BUILD_DIR)/build $(MASTER_TEX)
 	cp $(BUILD_DIR)/build.pdf $(PDF)
 
 clean:
 	rm -r $(BUILD_DIR)
-	rm $(COMBINED_TEX)
-	rm $(MARKDOWN_TEX)
 
 # Endversion - mit eingebauter Seitenvorschau
 # mehrere Durchlaeufe, da bei longtable einige runs mehr vonnoeten sind...
@@ -68,11 +65,16 @@ ps: $(PDF)
 
 pdf: $(PDF)
 
+create-build-dir:
+	mkdir -p $(BUILD_DIR)
+
 pandoc-watch:
 	while inotifywait -e close_write $(MARKDOWN_ANY); do make pandoc; done
 
-pandoc:
+pandoc-template: create-build-dir
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
+
+pandoc: pandoc-template create-build-dir
 	$(pandoc) $(MARKDOWN_CONTENT) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
 	$(MAKE) MASTER_TEX=$(MARKDOWN_TEX)
 
