@@ -54,11 +54,10 @@ watch-%: pdf
 # `make` command.
 watch-silent: watch-all-silent
 
-	# Builds the document and then watches all markdown files, calling `make` with
-	# e given target when a file changed. Mutes the output of the `make` command.
+# Builds the document and then watches all markdown files, calling `make` with
+# e given target when a file changed. Mutes the output of the `make` command.
 watch-%-silent: pdf
-	echo "$0"
-	# while inotifywait -e close_write $(MARKDOWN_FILES); do make $@ 1>/dev/null; done
+	while inotifywait -e close_write $(MARKDOWN_FILES); do make $@ 1>/dev/null; done
 
 # Default action.
 #hier sollte noch der aspell check rein für jedes file einzeln über for schleife
