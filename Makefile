@@ -2,6 +2,7 @@
 latexmk = latexmk
 pandoc = pandoc
 perl = perl
+python = python
 
 ## Required for thumbpdf as latexmk does not support thumbpdf by itself
 pdflatex = pdflatex
@@ -19,14 +20,17 @@ LITERATURE = bibliography.bib
 MARKDOWN_FILES = $(wildcard markdown/*.md)
 METADATA_FILE = markdown/meta.yaml
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
+ACRONYM_PREPROCESSOR = markdown/template/acronym-preprocessor.py
 PANDOC_TEMPLATE = markdown/template/template.tex
+ACRONYM_JSON = markdown/acronyms.json
 
 # Output directory
 BUILD_DIR = build
 
 
-# Intermediate tex files
+# Intermediate files
 COMBINED_MD = $(BUILD_DIR)/markdown.md
+ACRONYM_MD = $(BUILD_DIR)/acronyms.md
 COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
 MARKDOWN_TEX = $(BUILD_DIR)/markdown.tex
 
@@ -107,7 +111,8 @@ pandoc-template: create-build-dir
 
 # Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template concat-markdown
-	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters --listings
+	cat $(ACRONYM_JSON) | $(python) $(ACRONYM_PREPROCESSOR) $(ACRONYMS_JSON) > $(ACRONYM_MD)
+	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --chapters --listings
 
 # Builds the document and opens it with $(viewer).
 view: pdf

@@ -1,0 +1,25 @@
+[
+	{
+		"label": "er",
+		"full": "Error Rate",
+		"acronym": {
+			"standard": "ER"
+		}
+	},
+	{
+		"label": "fr",
+		"full": "Fehlerrate",
+		"acronym": {
+			"standard": "FR"
+		}
+	},
+	{
+		"label": "rdbms",
+		"full": "Relational Database Management System",
+		"acronym": {
+			"standard": "RDBMS",
+			"plural": "RDBMS",
+			"short-plural": "RDBMS"
+		}
+	}
+]
