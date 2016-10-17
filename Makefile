@@ -17,7 +17,7 @@ editor = gedit
 # Main file name
 PDF_OUT = paper.pdf
 LITERATURE = bibliography.bib
-MARKDOWN_FILES = $(wildcard markdown/*.md)
+MARKDOWN_FILES = $(wildcard markdown/chapters/*.md)
 METADATA_FILE = markdown/meta.yaml
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 ACRONYM_PREPROCESSOR = markdown/template/acronym-preprocessor.py
