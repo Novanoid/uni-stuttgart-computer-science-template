@@ -18,6 +18,7 @@ editor = gedit
 PDF_OUT = paper.pdf
 LITERATURE = bibliography.bib
 MARKDOWN_FILES = $(wildcard markdown/chapters/*.md)
+ABSTRACT_MD = markdown/abstract.md
 METADATA_FILE = markdown/meta.yaml
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 ACRONYM_PREPROCESSOR = markdown/template/acronym-preprocessor.py
@@ -112,7 +113,7 @@ pandoc-template: create-build-dir
 # Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template concat-markdown
 	cat $(ACRONYM_JSON) | $(python) $(ACRONYM_PREPROCESSOR) $(ACRONYMS_JSON) > $(ACRONYM_MD)
-	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --chapters --listings
+	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --include-in-header=$(ABSTRACT_MD) --chapters --listings
 
 # Builds the document and opens it with $(viewer).
 view: pdf
