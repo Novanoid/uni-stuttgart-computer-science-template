@@ -7,13 +7,23 @@
 %Siehe https://github.com/latextemplates/uni-stuttgart-cs-cover/issues/4
 \RequirePackage{kvoptions-patch}
 
-%English:
-%\let\ifdeutsch\iffalse
-%\let\ifenglisch\iftrue
+% Initialize the document
+\documentclass[fontsize=12pt, paper=a4, twoside, BCOR=3mm, DIV=13,
+	headinclude=true, footinclude=false, bibliography=totoc, headsepline,
+       cleardoublepage=empty, parskip=half, final]{scrbook}
 
-%German:
-\let\ifdeutsch\iftrue
-\let\ifenglisch\iffalse
+% Set the document language using the Markdown meta data
+\usepackage{ifthen}
+
+\ifthenelse{\equal{\detokenize{$document.language$}}{\detokenize{de}}}
+{
+	\let\ifdeutsch\iftrue
+	\let\ifenglisch\iffalse
+}
+{
+	\let\ifdeutsch\iffalse
+	\let\ifenglisch\iftrue
+}
 
 %
 \ifenglisch
@@ -43,11 +53,6 @@
 		\RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}
 	\fi
 \fi
-
-% Initialize the document
-\documentclass[fontsize=12pt, paper=a4, twoside, BCOR=3mm, DIV=13,
-	headinclude=true, footinclude=false, bibliography=totoc, headsepline,
-       cleardoublepage=empty, parskip=half, final]{scrbook}
 
 \input{markdown/template/include/preambel/packages_and_options}
 
