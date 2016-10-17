@@ -34,6 +34,33 @@
 %
 %%%
 
+% Set up the listings package for nice code highlighting
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  showstringspaces=false,
+  extendedchars=true,
+  numbers=left,
+  keywordstyle=\color[rgb]{0.13,0.29,0.53}\bfseries,
+  stringstyle=\color[rgb]{0.31,0.60,0.02},
+  commentstyle=\color[rgb]{0.13,0.29,0.53}\itshape,
+  numberstyle=\footnotesize,
+  stepnumber=1,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=true,
+  breakautoindent=true,
+  escapeinside={\%*}{*)},
+  linewidth=\textwidth,
+  basewidth=0.5em
+}
+
 %%%
 %Parallelbetrieb tex4ht und pdflatex
 \makeatletter
@@ -703,22 +730,6 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %
 %%%
 
-
-%%%
-% Fuer listings.sty
-\lstset{language=XML,
-        showstringspaces=false,
-        extendedchars=true,
-        basicstyle=\footnotesize\ttfamily,
-        commentstyle=\slshape,
-        stringstyle=\ttfamily, %Original: \rmfamily, damit werden die Strings im Quellcode hervorgehoben. Zusaetzlich evtl.: \scshape oder \rmfamily durch \ttfamily ersetzen. Dann sieht's aus, wie bei fancyvrb
-        breaklines=true,
-        breakatwhitespace=true,
-        columns=flexible,
-        aboveskip=0mm, %deaktivieren, falls man lstlistings direkt als floating object benutzt (\begin{lstlisting}[float,...])
-        belowskip=0mm, %deaktivieren, falls man lstlistings direkt als floating object benutzt (\begin{lstlisting}[float,...])
-        captionpos=b
-}
 \ifdeutsch
 \renewcommand{\lstlistlistingname}{Verzeichnis der Listings}
 \fi

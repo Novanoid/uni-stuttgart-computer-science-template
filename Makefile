@@ -107,7 +107,7 @@ pandoc-template: create-build-dir
 
 # Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template concat-markdown
-	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters
+	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --chapters --listings --latex-engine=xelatex
 
 # Builds the document and opens it with $(viewer).
 view: pdf
