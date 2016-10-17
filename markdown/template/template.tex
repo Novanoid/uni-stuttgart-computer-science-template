@@ -75,10 +75,10 @@
 %Angaben in die PDF-Infos uebernehmen
 \makeatletter
 \hypersetup{
-            pdftitle={}, %Titel der Arbeit
-            pdfauthor={}, %Author
-            pdfkeywords={}, % CR-Klassifikation und ggf. weitere Stichworte
-            pdfsubject={}
+            pdftitle={$meta.title$}, %Titel der Arbeit
+            pdfauthor={$meta.author$}, %Author
+            pdfkeywords={$meta.keywords$}, % CR-Klassifikation und ggf. weitere Stichworte
+            pdfsubject={$meta.subject$}
 }
 \makeatother
 

@@ -5,6 +5,8 @@ document:
 meta:
   title: The Most Important Paper in Existence
   author: John Doe
+  subject: Things that matter
+  keywords: Big Data, Internet of Things, Buzzwords
   institute: iaas
   number: 12345
   course: se
