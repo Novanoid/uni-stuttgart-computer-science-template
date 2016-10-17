@@ -17,7 +17,7 @@ Für lange Überschriften kann es sich anbieten, eigene Labels zu definieren. Da
 
 ---
 
-~~~~{.python}
+```python
 def fib(n):
 	'''This is a method documentation string.'''
 	a, b = 0, 1
@@ -26,4 +26,4 @@ def fib(n):
 		print(a, end=' ')
 		a, b = b, a + b
 	print()
-~~~~
+```
