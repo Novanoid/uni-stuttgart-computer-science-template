@@ -8,7 +8,7 @@ def process_acronyms(data):
 		acronym = acronym_data['acronym']
 		options_string = '{}{}'.format('plural={},'.format(acronym['plural']) if 'plural' in acronym else '', 'shortplural={}'.format(acronym['short-plural']) if 'short-plural' in acronym else '')
 
-		acronym_string = acronym_string + '\\newacronym[{}]{{{}}}{{{}}}{{{}}}\n'.format(options_string, acronym_data['label'], acronym['standard'], acronym_data['full'])
+		acronym_string = acronym_string + '\\newacronym[{}]{{{}}}{{{}}}{{{}}}\n'.format(options_string, acronym_data['label'], acronym['singular'], acronym_data['full'])
 
 	return acronym_string
 
