@@ -102,18 +102,14 @@ pdf: $(PDF)
 create-build-dir:
 	mkdir -p $(BUILD_DIR)
 
-# Concatinates all markdown files to one long file that is later fed to pandoc.
-concat-markdown: create-build-dir
-	sed -s '$$G' $(sort $(MARKDOWN_FILES)) > $(COMBINED_MD)
-
 # Assembles the LaTeX Pandoc template from all its pieces.
 pandoc-template: create-build-dir
 	$(perl) $(LATEX_EXPAND_SCRIPT) $(PANDOC_TEMPLATE) > $(COMBINED_TEX)
 
 # Converts the concatinated markdown file to tex.
-pandoc: create-build-dir pandoc-template concat-markdown
+pandoc: create-build-dir pandoc-template
 	cat $(ACRONYM_JSON) | $(python) $(ACRONYM_PREPROCESSOR) $(ACRONYMS_JSON) > $(ACRONYM_MD)
-	$(pandoc) $(COMBINED_MD) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --include-in-header=$(ABSTRACT_MD) --chapters --listings
+	$(pandoc) $(sort $(MARKDOWN_FILES)) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --include-in-header=$(ABSTRACT_MD) --chapters --listings
 
 # Builds the document and opens it with $(viewer).
 view: pdf

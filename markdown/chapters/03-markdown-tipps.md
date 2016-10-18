@@ -1,4 +1,4 @@
-# Markdown Tipps
+# Markdown-Tipps
 
 ## Allgemein
 
