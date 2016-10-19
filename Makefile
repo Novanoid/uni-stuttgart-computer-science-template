@@ -21,6 +21,7 @@ MARKDOWN_FILES = $(wildcard markdown/chapters/*.md)
 ABSTRACT_MD = markdown/abstract.md
 APPENDIX_MD = markdown/appendix.md
 METADATA_FILE = markdown/meta.yaml
+WATCHED_FILES = $(MARKDOWN_FILES) $(ABSTRACT_MD) $(APPENDIX_MD) $(METADATA_FILE)
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 ACRONYM_PREPROCESSOR = markdown/template/acronym-preprocessor.py
 PANDOC_TEMPLATE = markdown/template/template.tex
@@ -55,7 +56,7 @@ watch: watch-all
 # Builds the document and then watches all markdown files, calling `make` with
 # e given target when a file changed.
 watch-%: pdf
-	while inotifywait -e close_write $(MARKDOWN_FILES); do make $@; done
+	while inotifywait -e close_write $(WATCHED_FILES); do make $@; done
 
 # Builds the document and then watches all markdown files, triggering a
 # recompilation when one of the files was modified. Mutes the output of the
@@ -65,7 +66,7 @@ watch-silent: watch-all-silent
 # Builds the document and then watches all markdown files, calling `make` with
 # e given target when a file changed. Mutes the output of the `make` command.
 watch-%-silent: pdf
-	while inotifywait -e close_write $(MARKDOWN_FILES); do make $@ 1>/dev/null; done
+	while inotifywait -e close_write $(WATCHED_FILES); do make $@ 1>/dev/null; done
 
 # Default action.
 #hier sollte noch der aspell check rein für jedes file einzeln über for schleife
