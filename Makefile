@@ -19,6 +19,7 @@ PDF_OUT = paper.pdf
 LITERATURE = bibliography.bib
 MARKDOWN_FILES = $(wildcard markdown/chapters/*.md)
 ABSTRACT_MD = markdown/abstract.md
+APPENDIX_MD = markdown/appendix.md
 METADATA_FILE = markdown/meta.yaml
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 ACRONYM_PREPROCESSOR = markdown/template/acronym-preprocessor.py
@@ -34,6 +35,8 @@ COMBINED_MD = $(BUILD_DIR)/markdown.md
 ACRONYM_MD = $(BUILD_DIR)/acronyms.md
 COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
 MARKDOWN_TEX = $(BUILD_DIR)/markdown.tex
+ABSTRACT_TEX = $(BUILD_DIR)/abstract.tex
+APPENDIX_TEX = $(BUILD_DIR)/appendix.tex
 
 # Derived file names
 SRC = $(shell basename $(MARKDOWN_TEX) .tex)
@@ -108,8 +111,10 @@ pandoc-template: create-build-dir
 
 # Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template
+	$(pandoc) $(ABSTRACT_MD) -o $(ABSTRACT_TEX) --bibliography=$(LITERATURE) --chapters --listings
+	$(pandoc) $(APPENDIX_MD) -o $(APPENDIX_TEX) --bibliography=$(LITERATURE) --chapters --listings
 	cat $(ACRONYM_JSON) | $(python) $(ACRONYM_PREPROCESSOR) $(ACRONYMS_JSON) > $(ACRONYM_MD)
-	$(pandoc) $(sort $(MARKDOWN_FILES)) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --include-in-header=$(ABSTRACT_MD) --chapters --listings
+	$(pandoc) $(sort $(MARKDOWN_FILES)) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --include-after-body=$(APPENDIX_TEX) --include-in-header=$(ABSTRACT_TEX) --chapters --listings
 
 # Builds the document and opens it with $(viewer).
 view: pdf
