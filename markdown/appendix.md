@@ -1,4 +1,4 @@
-\setchapterpreamble[u]{%
+\setchapterpreamble[u]{
 	\dictum[Albert Einstein]{Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.}
 }
 
@@ -11,15 +11,15 @@ In LaTeX werden Absätze durch eine Leerzeile getrennt.
 Folglich werden neue Abstäze insbesondere *nicht* durch Doppelbackslashes erzeugt.
 Der letzte Satz kam in einem neuen Absatz.
 
-## File-Encoding und Unterstützung von Umlauten
-\label{sec:firstsectioninlatexhints}
+## File-Encoding und Unterstützung von Umlauten {#sec:firstsectioninlatexhints}
 
 Die Vorlage wurde 2010 auf UTF-8 umgestellt.
 Alle neueren Editoren sollten damit keine Schwierigkeiten haben.
 
-\section{Zitate}
-Referenzen werden mittels \texttt{\textbackslash cite[key]} gesetzt.
-Beispiel: \cite{WSPA} oder mit Autorenangabe: \citet{WSPA}.
+## Zitate
+Referenzen werden mit `@KEY` gesetzt. Soll der Autor nicht angegeben werden, so ist dies mit `-@KEY` möglich.
+
+Beispiel: -@WSPA oder mit Autorenangabe: @WSPA.
 
 Der folgende Satz demonstriert \begin{inparaenum}[1.]
 \item die Großschreibung von Autorennamen am Satzanfang,
@@ -27,10 +27,10 @@ Der folgende Satz demonstriert \begin{inparaenum}[1.]
 \item dass die Autorennamen ein Hyperlink auf das Literaturverzeichnis sind sowie
 \item dass in dem Literaturverzeichnis der Namenspräfix \enquote{van der} von \enquote{Wil M.\,P.\ van der Aalst} steht.
 \end{inparaenum}
-\Citet{RVvdA2016} präsentieren eine Studie über die Effektivität von Workflow-Management-Systemen.
+[-@RVvdA2016] präsentieren eine Studie über die Effektivität von Workflow-Management-Systemen.
 
-Der folgende Satz demonstriert, dass man mittels \texttt{label} in einem Bibliopgrahie"=Eintrag den Textteil des generierten Labels überschreiben kann, aber das Jahr und die Eindeutigkeit noch von biber generiert wird.
-Die Apache ODE Engine \cite{ApacheODE} ist eine Workflow-Maschine, die BPEL-Prozesse zuverlässig ausführt.
+Der folgende Satz demonstriert, dass man mittels `label` in einem Bibliopgrahie"=Eintrag den Textteil des generierten Labels überschreiben kann, aber das Jahr und die Eindeutigkeit noch von biber generiert wird.
+Die Apache ODE Engine [-@ApacheODE] ist eine Workflow-Maschine, die BPEL-Prozesse zuverlässig ausführt.
 
 Wörter am besten mittels \texttt{\textbackslash enquote\{...\}} \enquote{einschließen}, dann werden die richtigen Anführungszeichen verwendet.
 
@@ -38,30 +38,29 @@ Beim Erstellen der Bibtex-Datei wird empfohlen darauf zu achten, dass die DOI au
 
 \section{Mathematische Formeln}
 \label{sec:mf}
-Mathematische Formeln kann man $$so$$ setzen. \texttt{symbols-a4.pdf} (zu finden auf \url{http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf}) enthält eine Liste der unter LaTeX direkt verfügbaren Symbole.
-Z.\,B.\ $$\mathbb{N}$$ für die Menge der natürlichen Zahlen.
-Für eine vollständige Dokumentation für mathematischen Formelsatz sollte die Dokumentation zu \texttt{amsmath}, \url{ftp://ftp.ams.org/pub/tex/doc/amsmath/} gelesen werden.
+Mathematische Formeln kann man $so$ setzen. `symbols-a4.pdf` (zu finden [hier](http://www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf)) enthält eine Liste der unter LaTeX direkt verfügbaren Symbole.
+Z.B. $\mathbb{N}$ für die Menge der natürlichen Zahlen.
+Für eine vollständige Dokumentation für mathematischen Formelsatz sollte die [Dokumentation](ftp://ftp.ams.org/pub/tex/doc/amsmath/) zu `amsmath` gelesen werden.
 
 Folgende Gleichung erhält keine Nummer, da \texttt{\textbackslash equation*} verwendet wurde.
 \begin{equation*}
 x = y
 \end{equation*}
 
-Die Gleichung~\ref{eq:test} erhält eine Nummer:
+Die Gleichung \ref{eq:test} erhält eine Nummer:
 \begin{equation}
 \label{eq:test}
 x = y
 \end{equation}
 
-Eine ausführliche Anleitung zum Mathematikmodus von LaTeX findet sich in \url{http://www.ctan.org/tex-archive/help/Catalogue/entries/voss-mathmode.html}.
+Eine ausführliche Anleitung zum Mathematikmodus von LaTeX findet sich [hier](http://www.ctan.org/tex-archive/help/Catalogue/entries/voss-mathmode.html).
 
 \section{Quellcode}
 \Cref{lst:ListingANDlstlisting} zeigt, wie man Programmlistings einbindet.
 Mittels \texttt{\textbackslash lstinputlisting} kann man den Inhalt direkt aus Dateien lesen.
 
-%Listing-Umgebung wurde durch \newfloat{Listing} definiert
 \begin{Listing}
-\begin{lstlisting}
+\begin{lstlisting}[language=XML]
 <listing name="second sample">
   <content>not interesting</content>
 </listing>
@@ -70,30 +69,16 @@ Mittels \texttt{\textbackslash lstinputlisting} kann man den Inhalt direkt aus D
 \label{lst:ListingANDlstlisting}
 \end{Listing}
 
-Quellcode im \lstinline|<listing />| ist auch möglich.
+Quellcode im `<listing/>` ist auch möglich.
 
 \section{Abbildungen}
 
 Die \cref{fig:chor1} und \ref{fig:chor2} sind für das Verständnis dieses Dokuments wichtig.
 Im Anhang zeigt \vref{fig:AnhangsChor} erneut die komplette Choreographie.
 
-%Die Parameter in eckigen Klammern sind optionale Parameter - z.B. [htb!]
-%htb! bedeutet: "Liebes LaTeX, bitte platziere diese Abbildung zuerst hier ("_h_ere"). Falls das nicht funktioniert, dann bitte oben auf der Seite ("_t_op"). Und falls das nicht geht, bitte unten auf der Seite ("_b_ottom"). Und bitte, bitte bevorzuge hier und oben, auch wenn's net so optimal aussieht ("!")
-%Diese sollten nach Möglichkeit NICHT verwendet werden. LaTeX's Algorithmus für das Platzieren der Gleitumgebung ist schon sehr gut!
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{choreography.pdf}
-  \caption{Beispiel-Choreographie}
-  \label{fig:chor1}
-\end{figure}
+![Beispiel-Choreographie \label{fig:chor1}](choreography.pdf){ width=100% }
 
-\begin{figure}
-  \centering
-  \includegraphics[width=.8\textwidth]{choreography.pdf}
-  \caption[Beispiel-Choreographie]{Die Beispiel-Choreographie. Nun etwas kleiner, damit \texttt{\textbackslash textwidth} demonstriert wird. Und auch die Verwendung von alternativen Bildunterschriften für das Verzeichnis der Abbildungen. Letzteres ist allerdings nur Bedingt zu empfehlen, denn wer liest schon so viel Text unter einem Bild? Oder ist es einfach nur Stilsache?}
-  \label{fig:chor2}
-\end{figure}
-
+![Die Beispiel-Choreographie. Nun etwas kleiner, damit `\\textwidth` demonstriert wird. Und auch die Verwendung von alternativen Bildunterschriften für das Verzeichnis der Abbildungen. Letzteres ist allerdings nur bedingt zu empfehlen, denn wer liest schon so viel Text unter einem Bild? Oder ist es einfach nur Stilsache? \label{fig:chor2}](choreography.pdf){ width=80% }
 
 \begin{figure}
   \centering
@@ -106,9 +91,9 @@ Im Anhang zeigt \vref{fig:AnhangsChor} erneut die komplette Choreographie.
 \end{figure}
 
 Es ist möglich, SVGs direkt beim Kompilieren in PDF umzuwandeln.
-Dies ist im Quellcode zu latex-tipps.tex beschrieben, allerdings auskommentiert.
+Dies ist im Quellcode zu `latex-tipps.tex` beschrieben, allerdings auskommentiert.
 
-\iffalse % <-- Das hier wegnehmen, falls inkscape im Pfad ist
+\iffalse
 Das SVG in \cref{fig:directSVG} ist direkt eingebunden, während der Text im SVG in \cref{fig:latexSVG} mittels pdflatex gesetzt ist.
 Falls man die Graphiken sehen möchte, muss inkscape im PATH sein und im Tex-Quelltext \texttt{\textbackslash{}iffalse} und \texttt{\textbackslash{}iftrue} auskommentiert sein.
 
@@ -126,7 +111,7 @@ Falls man die Graphiken sehen möchte, muss inkscape im PATH sein und im Tex-Que
 \caption{Text im SVG mittels \LaTeX{} gesetzt}
 \label{fig:latexSVG}
 \end{figure}
-\fi % <-- Das hier wegnehmen, falls inkscape im Pfad ist
+\fi
 
 \section{Tabellen}
 
@@ -165,71 +150,45 @@ Falls man die Graphiken sehen möchte, muss inkscape im PATH sein und im Tex-Que
 		\bottomrule
 	\end{tabular}
 
-	\caption{Beispieltabelle f\"{u}r 4 Bedingungen (W-Z) mit jeweils 4 Parameters mit (M und SD). Hinweiß: immer die selbe anzahl an Nachkommastellen angeben.}
+	\caption{Beispieltabelle f\"{u}r 4 Bedingungen (W-Z) mit jeweils 4 Parameters mit (M und SD). Hinweis: immer dieselbe Anzahl an Nachkommastellen angeben.}
 	\label{tab:Werte}
 \end{table}
 
 \section{Pseudocode}
 \Cref{alg:sample} zeigt einen Beispielalgorithmus.
-\begin{Algorithmus} %Die Umgebung nur benutzen, wenn man den Algorithmus ähnlich wie Graphiken von TeX platzieren lassen möchte
+
+\begin{Algorithmus}
 \caption{Sample algorithm}
 \label{alg:sample}
 \begin{algorithmic}
-\Procedure{Sample}{$$a$$,$$v_e$$}
-\State $$\mathsf{parentHandled} \gets (a = \mathsf{process}) \lor \mathsf{visited}(a'), (a',c,a) \in \mathsf{HR}$$
-\State \Comment $$(a',c'a) \in \mathsf{HR}$$ denotes that $$a'$$ is the parent of $$a$$
-\If{$$\mathsf{parentHandled}\,\land(\mathcal{L}_\mathit{in}(a)=\emptyset\,\lor\,\forall l \in \mathcal{L}_\mathit{in}(a): \mathsf{visited}(l))$$}
-\State $$\mathsf{visited}(a) \gets \text{true}$$
-\State $$\mathsf{writes}_\circ(a,v_e) \gets
+\Procedure{Sample}{$a$,$v_e$}
+\State $\mathsf{parentHandled} \gets (a = \mathsf{process}) \lor \mathsf{visited}(a'), (a',c,a) \in \mathsf{HR}$
+\State \Comment $(a',c'a) \in \mathsf{HR}$ denotes that $a'$ is the parent of $a$
+\If{$\mathsf{parentHandled}\,\land(\mathcal{L}_\mathit{in}(a)=\emptyset\,\lor\,\forall l \in \mathcal{L}_\mathit{in}(a): \mathsf{visited}(l))$}
+\State $\mathsf{visited}(a) \gets \text{true}$
+\State $\mathsf{writes}_\circ(a,v_e) \gets
 \begin{cases}
 \mathsf{joinLinks}(a,v_e) & \abs{\mathcal{L}_\mathit{in}(a)} > 0\\
 \mathsf{writes}_\circ(p,v_e)
 & \exists p: (p,c,a) \in \mathsf{HR}\\
 (\emptyset, \emptyset, \emptyset, false) & \text{otherwise}
 \end{cases}
-$$
-\If{$$a\in\mathcal{A}_\mathit{basic}$$}
-  \State \Call{HandleBasicActivity}{$$a$$,$$v_e$$}
-\ElsIf{$$a\in\mathcal{A}_\mathit{flow}$$}
-  \State \Call{HandleFlow}{$$a$$,$$v_e$$}
-\ElsIf{$$a = \mathsf{process}$$} \Comment Directly handle the contained activity
-  \State \Call{HandleActivity}{$$a'$$,$$v_e$$}, $$(a,\bot,a') \in \mathsf{HR}$$
-  \State $$\mathsf{writes}_\bullet(a) \gets \mathsf{writes}_\bullet(a')$$
+$
+\If{$a\in\mathcal{A}_\mathit{basic}$}
+  \State \Call{HandleBasicActivity}{$a$,$v_e$}
+\ElsIf{$a\in\mathcal{A}_\mathit{flow}$}
+  \State \Call{HandleFlow}{$a$,$v_e$}
+\ElsIf{$a = \mathsf{process}$} \Comment Directly handle the contained activity
+  \State \Call{HandleActivity}{$a'$,$v_e$}, $(a,\bot,a') \in \mathsf{HR}$
+  \State $\mathsf{writes}_\bullet(a) \gets \mathsf{writes}_\bullet(a')$
 \EndIf
-\ForAll{$$l \in \mathcal{L}_\mathit{out}(a)$$}
-  \State \Call{HandleLink}{$$l$$,$$v_e$$}
+\ForAll{$l \in \mathcal{L}_\mathit{out}(a)$}
+  \State \Call{HandleLink}{$l$,$v_e$}
 \EndFor
 \EndIf
 \EndProcedure
 \end{algorithmic}
 \end{Algorithmus}
-
-\clearpage
-Und wer einen Algorithmus schreiben möchte, der über mehrere Seiten geht, der kann das nur mit folgendem \textbf{üblen} Hack tun:
-
-{
-\begin{minipage}{\textwidth}
-\hrule height .8pt width\textwidth
-\vskip.3em%\vskip\abovecaptionskip\relax
-\stepcounter{Algorithmus}
-\addcontentsline{alg}{Algorithmus}{\protect\numberline{\theAlgorithmus}{\ignorespaces Description \relax}}
-\noindent\textbf{Algorithmus \theAlgorithmus} Description
-%\stepcounter{algorithm}
-%\addcontentsline{alg}{Algorithmus}{\thealgorithm{}\hskip0em Description}
-%\textbf{Algorithmus \thealgorithm} Description
-\vskip.3em%\vskip\belowcaptionskip\relax
-\hrule height .5pt width\textwidth
-\end{minipage}
-%without the following line, the text is nerer at the rule
-\vskip-.3em
-%
-code goes here\\
-test2\\
-%
-\vskip-.7em
-\hrule height .5pt width\textwidth
-}
-
 
 \section{Abkürzungen}
 
@@ -251,20 +210,6 @@ Falls \enquote{varioref} Schwierigkeiten macht, dann kann man stattdessen \enquo
 Dies erzeugt auch das Wort \enquote{Abschnitt} automatisch: \cref{sec:mf}.
 Das geht auch für Abbildungen usw.
 Im Englischen bitte \verb1\Cref{...}1 (mit großen \enquote{C} am Anfang) verwenden.
-
-
-%Mit MiKTeX Installation ab dem 2012-01-16 nicht mehr nötig
-%Falls ein Abschnitt länger als eine Seite wird und man mittels \texttt{\textbackslash{}vref} auf eine konkrete Stelle in der Section
-%verweisen möchte, dann sollte man \texttt{\textbackslash{}phantomsection} verwenden und dann wird
-%auch bei \texttt{vref} die richtige Seite angeben.
-
-%%The link location will be placed on the line below.
-%%Tipp von http://en.wikibooks.org/wiki/LaTeX/Labels_and_Cross-referencing#The_hyperref_package_and_.5Cphantomsection
-%\phantomsection
-%\label{alabel}
-%Das Beispiel für \texttt{\textbackslash{}phantomsection} bitte im \LaTeX{}-Quellcode anschauen.
-
-%Hier das Beispiel: Siehe Abschnitt \vref{hack1} und Abschnitt \vref{hack2}.
 
 \section{Definitionen}
 \begin{definition}[Title]
@@ -305,7 +250,6 @@ Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreh
 \end{figure}
 
 \begin{landscape}
-  %sidewaysfigure
   \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{choreography.pdf}
@@ -315,18 +259,14 @@ Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreh
 \end{landscape}
 
 \clearpage
-%hint by http://tex.stackexchange.com/a/3265/9075
-%other option is to use changepage according to http://tex.stackexchange.com/a/2639/9075. This, however, has issues with landscape
 \thispagestyle{empty}
 
 \savegeometry{koma}
 
-%If you only have height problems, this is not needed at all
 \addtolength{\textwidth}{2cm}
 \addtolength{\evensidemargin}{-1cm}
 
 \begin{landscape}
-  %sidewaysfigure
   \begin{figure}
     \centerline{\includegraphics[width=0.9\paperheight]{choreography.pdf}}
     \caption{Beispiel-Choreographie, auf einer weißen Seite gezeigt wird und über die definierten Seitenränder herausragt}
