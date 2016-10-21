@@ -17,14 +17,20 @@ editor = gedit
 # Main file name
 PDF_OUT = paper.pdf
 LITERATURE = bibliography.bib
-MARKDOWN_FILES = $(wildcard markdown/chapters/*.md)
+
+PANDOC_TEMPLATE = markdown/template/template.tex
+PANDOC_TEMPLATE_BEFORE = markdown/template/before-body.md
+PANDOC_TEMPLATE_AFTER = markdown/template/after-body.md
+
 ABSTRACT_MD = markdown/abstract.md
 APPENDIX_MD = markdown/appendix.md
+MARKDOWN_FILES = $(ABSTRACT_MD) $(PANDOC_TEMPLATE_BEFORE) $(sort $(wildcard markdown/chapters/*.md)) $(PANDOC_TEMPLATE_AFTER) $(APPENDIX_MD)
+
 METADATA_FILE = markdown/meta.yaml
 WATCHED_FILES = $(MARKDOWN_FILES) $(ABSTRACT_MD) $(APPENDIX_MD) $(METADATA_FILE)
+
 LATEX_EXPAND_SCRIPT = markdown/template/latexpand.pl
 ACRONYM_PREPROCESSOR = markdown/template/acronym-preprocessor.py
-PANDOC_TEMPLATE = markdown/template/template.tex
 ACRONYM_JSON = markdown/acronyms.json
 
 # Output directory
@@ -36,8 +42,6 @@ COMBINED_MD = $(BUILD_DIR)/markdown.md
 ACRONYM_MD = $(BUILD_DIR)/acronyms.md
 COMBINED_TEX = $(BUILD_DIR)/pandoc-template.combined.tex
 MARKDOWN_TEX = $(BUILD_DIR)/markdown.tex
-ABSTRACT_TEX = $(BUILD_DIR)/abstract.tex
-APPENDIX_TEX = $(BUILD_DIR)/appendix.tex
 
 # Derived file names
 SRC = $(shell basename $(MARKDOWN_TEX) .tex)
@@ -112,10 +116,8 @@ pandoc-template: create-build-dir
 
 # Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template
-	$(pandoc) $(ABSTRACT_MD) -o $(ABSTRACT_TEX) --bibliography=$(LITERATURE) --chapters --listings
-	$(pandoc) $(APPENDIX_MD) -o $(APPENDIX_TEX) --bibliography=$(LITERATURE) --chapters --listings
 	cat $(ACRONYM_JSON) | $(python) $(ACRONYM_PREPROCESSOR) $(ACRONYMS_JSON) > $(ACRONYM_MD)
-	$(pandoc) $(sort $(MARKDOWN_FILES)) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --include-after-body=$(APPENDIX_TEX) --include-in-header=$(ABSTRACT_TEX) --chapters --listings
+	$(pandoc) $(MARKDOWN_FILES) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --chapters --listings
 
 # Builds the document and opens it with $(viewer).
 view: pdf

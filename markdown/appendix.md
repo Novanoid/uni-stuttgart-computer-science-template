@@ -2,8 +2,7 @@
 	\dictum[Albert Einstein]{Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.}
 }
 
-\chapter{LaTeX-Tipps}
-\label{chap:latextipps}
+# LaTeX-Tipps {#latextipps}
 
 Pro Satz eine neue Zeile.
 Das ist wichtig, um sauber versionieren zu können.
@@ -12,7 +11,7 @@ In LaTeX werden Absätze durch eine Leerzeile getrennt.
 Folglich werden neue Abstäze insbesondere *nicht* durch Doppelbackslashes erzeugt.
 Der letzte Satz kam in einem neuen Absatz.
 
-\section{File-Encoding und Unterstützung von Umlauten}
+## File-Encoding und Unterstützung von Umlauten
 \label{sec:firstsectioninlatexhints}
 
 Die Vorlage wurde 2010 auf UTF-8 umgestellt.
