@@ -82,13 +82,15 @@ $(PDF): pandoc $(MARKDOWN_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES) create-bu
 	$(latexmk) -jobname=$(BUILD_DIR)/build $(MARKDOWN_TEX)
 	cp $(BUILD_DIR)/build.pdf $(PDF_OUT)
 
-# Cleans all files created during compilation, excluding the final PDF.
+# Cleans all files created during compilation, excluding the final PDF. Fails
+# silently.
 clean:
-	rm -r $(BUILD_DIR) 2> /dev/null
+	rm -r $(BUILD_DIR) 2> /dev/null || true
 
-# Cleans all files created during compilation, including the final PDF.
+# Cleans all files created during compilation, including the final PDF. Fails
+# silently.
 clean-all: clean
-	rem $(PDF_OUT) 2> /dev/null
+	rm $(PDF_OUT) 2> /dev/null || true
 
 # Endversion - mit eingebauter Seitenvorschau
 # mehrere Durchlaeufe, da bei longtable einige runs mehr vonnoeten sind...
