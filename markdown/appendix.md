@@ -2,7 +2,7 @@
 	\dictum[Albert Einstein]{Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind.}
 }
 
-# LaTeX-Tipps {#latextipps}
+# LaTeX-Tipps {#latex-tipps}
 
 Pro Satz eine neue Zeile.
 Das ist wichtig, um sauber versionieren zu können.

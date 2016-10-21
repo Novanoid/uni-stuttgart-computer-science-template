@@ -13,7 +13,12 @@ Referenzen lassen sich ganz einfach durch `[Ueberschrift der Sektion]`, bzw \lin
 
 Dies fügt automatisch `\label`s für die entsprechende Sektion ein, sodass im gerenderten PDF-Dokument auch auf die Referenz geklickt werden kann und die Ansicht automatisch zu der entsprechenden Sektion springt.
 
-Für lange Überschriften kann es sich anbieten, eigene Labels zu definieren. Das geht, indem man nach der entsprechenden Überschrift ein `{#label}` anhängt.
+Für lange Überschriften oder um eine Unabhängigkeit der Referenzen bezüglich des Überschriftstext zu erreichen kann es sich anbieten, eigene Labels zu definieren. Das geht, indem man nach der entsprechenden Überschrift ein `{#label}` anhängt.
+
+Desweiteren können unter Verwendung der genannten Labels immer noch die LaTeX-Standardreferenzen `\nameref{label}` verwendet werden. Dies ist besonders dann hilfreich, wenn die vorangestellte Leerseite mit der Referenz auf ein Kapitel interferiert.
+
+### Code {-}
+Das Template unterstützt farbiges Code-Highlighting für eine Vielzahl von Programmiersprachen. Hierfür reicht ein standardmäßiges Code-Listing in der Markdown-Syntax unter Angabe der Programmiersprache aus.
 
 ---
 
