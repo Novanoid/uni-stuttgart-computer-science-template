@@ -68,7 +68,7 @@ watch-%: pdf
 watch-silent: watch-all-silent
 
 # Builds the document and then watches all markdown files, calling `make` with
-# e given target when a file changed. Mutes the output of the `make` command.
+# the given target when a file changed. Mutes the output of the `make` command.
 watch-%-silent: pdf
 	while inotifywait -e close_write $(WATCHED_FILES); do make $@ 1>/dev/null; done
 
