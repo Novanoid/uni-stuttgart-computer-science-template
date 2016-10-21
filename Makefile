@@ -117,7 +117,7 @@ pandoc-template: create-build-dir
 # Converts the concatinated markdown file to tex.
 pandoc: create-build-dir pandoc-template
 	cat $(ACRONYM_JSON) | $(python) $(ACRONYM_PREPROCESSOR) $(ACRONYMS_JSON) > $(ACRONYM_MD)
-	$(pandoc) $(MARKDOWN_FILES) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --include-before-body=$(ACRONYM_MD) --chapters --listings
+	$(pandoc) $(MARKDOWN_FILES) $(METADATA_FILE) -o $(MARKDOWN_TEX) --template=$(COMBINED_TEX) --bibliography=$(LITERATURE) --metadata link-citations=true --biblatex --include-before-body=$(ACRONYM_MD) --chapters --listings
 
 # Builds the document and opens it with $(viewer).
 view: pdf
