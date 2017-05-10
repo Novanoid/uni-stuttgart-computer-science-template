@@ -7,8 +7,12 @@ python = python
 ## Required for thumbpdf as latexmk does not support thumbpdf by itself
 pdflatex = pdflatex
 
-## evince at linux
-viewer = 'C:/Program Files (x86)/SumatraPDF/SumatraPDF.exe'
+## SumatraPDF on Windows, evince on linux
+ifeq ($(OS), Windows_NT)
+	viewer = 'C:/Program Files (x86)/SumatraPDF/SumatraPDF.exe'
+else
+	viewer = 'evince'
+endif
 
 ## Editor
 editor = gedit
