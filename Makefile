@@ -132,7 +132,7 @@ view: pdf
 # Opens the document in $(viewer)
 edit:
 	$(viewer) $(PDF_OUT)&
-	$(editor) *.tex&
+	$(editor) ./markdown/*.md ./markdown/chapters/*.md&
 
 6: ps
 	psnup -6 $(SRC).ps > 6.ps
