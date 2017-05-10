@@ -236,9 +236,16 @@ test2\\
 
 \section{Abkürzungen}
 
-Beim ersten Durchlauf betrug die \gls{fr} 5. Beim zweiten Durchlauf war die \gls{fr} 3. Die Pluralform sieht man hier:\ \glspl{er}. Um zu demonstrieren wie das Abkürzungsverzeichnis bei längeren Beschreibungstexten aussieht, muss hier noch \glspl{rdbms} erwähnt werden.
+Beim ersten Durchlauf betrug die \gls{fr} 5.
+Beim zweiten Durchlauf war die \gls{fr} 3.~Die Pluralform sieht man hier:\ \glspl{er}.
+Um zu demonstrieren, wie das Abkürzungsverzeichnis bei längeren Beschreibungstexten aussieht, muss hier noch \glspl{rdbms} erwähnt werden.
 
-Mit \verb+\gls{...}+ können Abkürungen eingebaut werden, beim ersten aufrufen wird die lange Form eingesetzt. Beim wiederholten Verwenden von \verb+\gls{...}+ wird automatisch die kurz Form angezeigt. Außerdem wird die Abkürzung automatisch in die Abkürzungsliste eingefügt. Mit \verb+\glspl{...}+ wird die Pluralform verwendet. Möchte man dass bei der ersten Verwendung direkt die Kurzform erscheint, so kann man mit \verb+\glsunset{...}+ eine Abkürzung als bereits verwendet markieren. Das Gegenteil erreicht man mit \verb+\glsreset{...}+. 
+Mit \verb+\gls{...}+ können Abkürzungen eingebaut werden, beim ersten Aufrufen wird die lange Form eingesetzt.
+Beim wiederholten Verwenden von \verb+\gls{...}+ wird automatisch die kurz Form angezeigt.
+Außerdem wird die Abkürzung automatisch in die Abkürzungsliste eingefügt.
+Mit \verb+\glspl{...}+ wird die Pluralform verwendet.
+Möchte man, dass bei der ersten Verwendung direkt die Kurzform erscheint, so kann man mit \verb+\glsunset{...}+ eine Abkürzung als bereits verwendet markieren.
+Das Gegenteil erreicht man mit \verb+\glsreset{...}+.
 
 Definiert werden Abkürzungen in der Datei \textit{content\\ausarbeitung.tex} mithilfe von \verb+\newacronym{...}{...}{...}+.
 
@@ -253,7 +260,7 @@ Das Kommando \texttt{\textbackslash{}vref} funktioniert ähnlich wie \texttt{\te
 Falls \enquote{varioref} Schwierigkeiten macht, dann kann man stattdessen \enquote{cref} verwenden.
 Dies erzeugt auch das Wort \enquote{Abschnitt} automatisch: \cref{sec:mf}.
 Das geht auch für Abbildungen usw.
-Im Englischen bitte \verb1\Cref{...}1 (mit großen \enquote{C} am Anfang) verwenden.
+Im Englischen bitte \verb1\Cref{...}1 (mit großem \enquote{C} am Anfang) verwenden.
 
 
 %Mit MiKTeX Installation ab dem 2012-01-16 nicht mehr nötig
@@ -296,9 +303,8 @@ Letzteres erreicht man durch den Parameter \texttt{osf} bei dem Paket \texttt{li
 \end{compactenum}
 
 \section{Weitere Illustrationen}
-Abbildungen~\ref{fig:AnhangsChor} und~\ref{fig:AnhangsChor2} zeigen zwei Choreographien, die den
-Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreht, um das Paket
-\texttt{rotating} zu demonstrieren.
+\Cref{fig:AnhangsChor,fig:AnhangsChor2} zeigen zwei Choreographien, die den Sachverhalt weiter erläutern sollen.
+Die zweite Abbildung ist um 90 Grad gedreht, um das Paket \texttt{pdflscape} zu demonstrieren.
 
 \begin{figure}
   \centering
@@ -308,7 +314,6 @@ Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreh
 \end{figure}
 
 \begin{landscape}
-  %sidewaysfigure
   \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{choreography.pdf}
@@ -317,7 +322,15 @@ Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreh
   \end{figure}
 \end{landscape}
 
+
+\iffalse
+
 \clearpage
+
+FIXME - This does not work with MiKTeX as of 2016-12-30
+
+TODO- demonstrate rotating package
+
 %hint by http://tex.stackexchange.com/a/3265/9075
 %other option is to use changepage according to http://tex.stackexchange.com/a/2639/9075. This, however, has issues with landscape
 \thispagestyle{empty}
@@ -331,7 +344,8 @@ Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreh
 \begin{landscape}
   %sidewaysfigure
   \begin{figure}
-    \centerline{\includegraphics[width=0.9\paperheight]{choreography.pdf}}
+    \centering
+    \includegraphics[width=0.9\paperheight]{choreography.pdf}
     \caption{Beispiel-Choreographie, auf einer weißen Seite gezeigt wird und über die definierten Seitenränder herausragt}
   \end{figure}
 \end{landscape}
@@ -340,6 +354,42 @@ Sachverhalt weiter erläutern sollen. Die zweite Abbildung ist um 90 Grad gedreh
 %%\restoregeometry cannot be used as we use \addtolength
 \loadgeometry{koma}
 
+\fi
+
+
+\IfFileExists{pgfplots.sty}{
+\section{Plots with pgfplots}
+Pgfplot ist ein Paket um Graphen zu plotten ohne den Umweg über gnuplot oder matplotlib zu gehen.
+\begin{figure}[h]
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[xlabel=$x$,
+               ylabel=$\sin(x)$]
+    \addplot {sin(deg(x))};  % Sinus-Funktion zeichnen
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{$\sin(x)$ mit pgfplots.}
+\end{figure}
+}{}
+
+\IfFileExists{tikz.sty}{
+\section{Figures with tikz}
+TikZ ist ein Paket um Zeichnungen mittels Programmierung zu erstellen.
+Dieses Paket eignet sich um Gitter zu erstellen oder andere regelmäßige Strukturen zu erstellen.
+\begin{figure}[ht]
+\begin{center}
+\begin{tikzpicture}
+  \draw(0,0) rectangle (4,4);
+  \foreach \x in {0.5,1,1.5,2,2.5,3,3.5}
+    \foreach \y in {0.5,1,1.5,2,2.5,3,3.5}
+      \draw(\x,\y) circle (1pt);
+\end{tikzpicture}
+\end{center}
+\caption{Eine tikz-Graphik.}\label{fig:tikz_example}
+\end{figure}
+}{}
+
 \section{Schlusswort}
 Verbesserungsvorschläge für diese Vorlage sind immer willkommen.
-Bitte bei github ein Ticket eintragen (\url{https://github.com/latextemplates/uni-stuttgart-computer-science-template/issues}).
+Bitte bei GitHub ein Ticket eintragen (\url{https://github.com/latextemplates/uni-stuttgart-computer-science-template/issues}).

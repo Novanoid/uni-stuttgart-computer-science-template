@@ -20,6 +20,11 @@
 %%%
 
 %%%
+% Required for recent version of komascript, as this template does not use the most recent commands of KOMAScript
+\usepackage{scrhack}
+%%%
+
+%%%
 % Codierung
 % Wir sind im 21 Jahrhundert, utf-8 löst so viele Probleme.
 %
@@ -441,8 +446,8 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %%%
 %biblatex statt bibtex
 \usepackage[
-  backend       = biber, 	%biber does not work with 64x versions alternative: bibtex8
-														%minalphanames only works with biber backend														
+  backend       = biber, %biber does not work with 64x versions alternative: bibtex8
+						 %minalphanames only works with biber backend
   sortcites     = true,
   bibstyle      = alphabetic,
   citestyle     = alphabetic,
@@ -615,7 +620,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
     author={Lars K.},
     type=bachelor,
     institute=iaas,
-    number=12345,
+    number=12345, % IF you do not have a number and do not need one leave the number field blank e.g. number=,
     course=se,
     examiner={Prof.\ Dr.\ Uwe Fessor},
     supervisor={Dipl.-Inf.\ Roman Tiker,\\Dipl.-Inf.\ Laura Stern,\\Otto Normalverbraucher,\ M.Sc.},
@@ -802,4 +807,21 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 % Reuse of footnotes
 % Reuse of Footnotes, see http://tex.stackexchange.com/questions/10102/multiple-references-to-the-same-footnote-with-hyperref-support-is-there-a-bett
 \crefformat{footnote}{#2\footnotemark[#1]#3}
+%%%
+
+%%%
+% pgfplots (optional if the ppackage is installed)
+% PGFPlots draws high-qual­ity func­tion plots in nor­mal or log­a­rith­mic scal­ing
+\IfFileExists{pgfplots.sty}{
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+}{}
+%%%
+
+%%%
+% tikz (optional if the ppackage is installed)
+% Package for creating graphics programmatically
+\IfFileExists{tikz.sty}{
+\usepackage{tikz}
+}{}
 %%%
