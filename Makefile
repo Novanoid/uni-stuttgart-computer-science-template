@@ -127,11 +127,11 @@ pandoc: create-build-dir pandoc-template
 
 # Builds the document and opens it with $(viewer).
 view: pdf
-	$(viewer) $(PDF)&
+	$(viewer) $(PDF_OUT)&
 
 # Opens the document in $(viewer)
 edit:
-	$(viewer) $(PDF)&
+	$(viewer) $(PDF_OUT)&
 	$(editor) *.tex&
 
 6: ps
