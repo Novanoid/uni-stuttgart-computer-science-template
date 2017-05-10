@@ -57,6 +57,11 @@ AUX = $(SRC).aux
 
 date=$(shell date +%Y%m%d%H%M)
 
+# Default action.
+#hier sollte noch der aspell check rein für jedes file einzeln über for schleife
+all: $(PDF)
+.PHONY: $(PDF)
+
 # Builds the document and then watches all markdown files, triggering a
 # recompilation when one of the files was modified.
 watch: watch-all
@@ -75,11 +80,6 @@ watch-silent: watch-all-silent
 # the given target when a file changed. Mutes the output of the `make` command.
 watch-%-silent: pdf
 	while inotifywait -e close_write $(WATCHED_FILES); do make $@ 1>/dev/null; done
-
-# Default action.
-#hier sollte noch der aspell check rein für jedes file einzeln über for schleife
-all: $(PDF)
-.PHONY: $(PDF)
 
 # Builds the document and outputs it to $(PDF_OUT).
 $(PDF): pandoc $(MARKDOWN_TEX) $(LITERATURE) $(TEX_FILES) $(GFX_FILES) create-build-dir
